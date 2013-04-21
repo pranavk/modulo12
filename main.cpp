@@ -33,7 +33,8 @@ int sc_main(int argc, char **argv){
         Monitor monitor("Monitor");
 
         //initialize the clock
-        sc_clock clk("clock",200,SC_NS);
+	int period = 200;
+        sc_clock clk("clock",period, 0.5, period/2, true);
 
         //now give the connections
         feeder.clk_in(clk);
