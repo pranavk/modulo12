@@ -1,11 +1,4 @@
-/*
- * Copyright 2013, Pranav Kant <pranav913@gmail.com>
- *
- * This program is free software, distributed under the terms of
- * the GNU General Public License Version 2.
- */
-
-== Requirements ==
+# Requirements
 
 You need to have following libraries/softwares to successfully build and run
 this project :
@@ -14,24 +7,24 @@ this project :
 *    SystemC library - to compile the project
 *    gtkwave 	     - to analyse the waveforms
 
-== Running the Modulo 12 counter ==
+# Running the Modulo 12 counter 
 
 This modulo 12 counter can be easily made to run by following some very simple
 steps. In the beginning you just need to follow the following sequence of
 commands to start.
 
-*	 make
+- make
 
 This `make` will automatically compile all necessary files, link them and create
 the executable with name `modulo12.vcd`.
 
-*   	 ./modulo12
+- ./modulo12
 
 Running the executable modulo12 will create a vcd file with name
 'modulo12.vcd'. To open that file you need to have gtkwave installed on your
 system. 
 
-== Additional Notes ==
+# Additional Notes 
 
 The project is imported into a very famous Version Control System, `git`. You
 can view the history showing the development phase of the project and take
