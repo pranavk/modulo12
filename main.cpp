@@ -26,8 +26,6 @@ int sc_main(int argc, char **argv){
         sc_signal<bool> counter_display_dummy;
         sc_signal<sc_uint<4> > display_monitor;
 
-        sc_signal<sc_bv<4> > counter_display;
-
         //initialize the instances of each component
         Feeder feeder("feeder");
         Counter counter("Counter");
@@ -71,7 +69,6 @@ int sc_main(int argc, char **argv){
         sc_trace(tf, counter_display1, "counter_display1");
         sc_trace(tf, counter_display2, "counter_display2");
         sc_trace(tf, counter_display3, "counter_display3");
-        sc_trace(tf, counter_display, "counter_display");
 
         sc_trace(tf, counter.tt0, "counter_tt0");
         sc_trace(tf, counter.tt1, "counter_tt1");
