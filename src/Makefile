@@ -1,41 +1,42 @@
-TARGET_ARCH = linux
-
-CC     = g++
-OPT    = -O3
-DEBUG  = -g
-OTHER  = 
-CFLAGS = $(OPT) $(OTHER)
-# CFLAGS = $(DEBUG) $(OTHER)
-
-MODULE = modulo12
-
-## This is the line to put all the filenames (cpp) of your source code, separated by space.
-SRCS = feeder.h feeder.cpp tflipflop.cpp tflipflop.h counter.h counter.cpp display.h display.cpp monitor.cpp monitor.h and.h and.cpp sig_rep.h sig_rep.cpp main.cpp 
-
+SRCS = $(wildcard *.cpp)
 OBJS = $(SRCS:%.cpp=%.o)
+DEPS = $(SRCS:%.cpp=%.d)
 
-## Variable that points to SystemC installation path
-SYSTEMC = /usr/local/systemc
+SYSTEMC         = /usr/local/systemc
 
-INCDIR = -I. -I$(SYSTEMC)/include
-LIBDIR = -L. -L$(SYSTEMC)/lib-linux64
+CXX = g++
+CXXFLAGS = -Wall -ansi -g -O0 -Di386
 
-LIBS   =  -lsystemc -lm $(EXTRA_LIBS)
+INCLUDES = -I $(SYSTEMC)/include
 
-EXE    = $(MODULE)
+LD = $(CXX)
+LDFLAGS = $(CXXFLAGS)
 
-.SUFFIXES: .cc .cpp .o .x
+LIBS = -L $(SYSTEMC)/lib-linux64 -lsystemc -Wl,-rpath,/usr/local/systemc/lib-linux
 
-all: $(EXE)
+PROGRAM = modulo12
 
-$(EXE): $(OBJS)
-	$(CC) $(CFLAGS) $(INCDIR) $(LIBDIR) -o $@ $(OBJS) $(LIBS) 2>&1 | c++filt
-.cpp.o:
-	$(CC) $(CFLAGS) $(INCDIR) -c $<
+default = $(PROGRAM)
 
-.cc.o:
-	$(CC) $(CFLAGS) $(INCDIR) -c $<
+$(PROGRAM):	$(OBJS) $(DEPS)
+		$(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o ./$@
+                
+test:		$(PROGRAM)
+		./$<
+                
+clean:;		rm -rf $(PROGRAM) *.o core* *.d *.vcd *.dump
 
-clean::
-	rm -rf $(EXE) *.o core* *.d *.vcd *.dump
+# Cancel implicit rule
+%.o: 		%.cpp
 
+%.o:		%.cpp %.d
+		$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+%.d:		%.cpp
+		@ echo Making dependencies for $<
+		@ g++ -MM $(INCLUDES) $< | sed 's#: # $*.d : #1' > $@
+
+# Include dependency files .d
+ifneq ("$(wildcard *.d)","")
+	include $(wildcard *.d)
+endif
