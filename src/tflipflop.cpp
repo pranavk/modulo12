@@ -12,8 +12,8 @@ void TFlipFlop::work(void){
         bool prev = 0;
 
         bool trigger_v;
-        bool output_v;
-        bool output_inverse_v;
+       // bool output_v;           
+       // bool output_inverse_v;
         wait();
 
 	while(1){
