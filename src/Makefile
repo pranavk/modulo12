@@ -2,17 +2,17 @@ SRCS = $(wildcard *.cpp)
 OBJS = $(SRCS:%.cpp=%.o)
 DEPS = $(SRCS:%.cpp=%.d)
 
-SYSTEMC         = /usr/local/systemc
+SYSTEMC         = /usr/local/systemc-2.3.2
 
 CXX = g++
-CXXFLAGS = -Wall -ansi -g -O0 -Di386
+CXXFLAGS = -Wall -g -O0 -Di386
 
 INCLUDES = -I $(SYSTEMC)/include
 
 LD = $(CXX)
 LDFLAGS = $(CXXFLAGS)
 
-LIBS = -L $(SYSTEMC)/lib-linux64 -lsystemc -Wl,-rpath,/usr/local/systemc/lib-linux
+LIBS = -L $(SYSTEMC)/lib-linux64 -lsystemc -Wl,-rpath,$(SYSTEMC)/lib-linux64
 
 PROGRAM = modulo12
 
